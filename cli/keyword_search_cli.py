@@ -4,7 +4,7 @@ import argparse
 import json
 
 from lib.search_utils import (
-    clean,
+    has_matching_token,
 )
 
 
@@ -25,14 +25,13 @@ def main() -> None:
             print(f"Searching for: {args.query}")
             matchingMovies = []
             for movie in movieDB["movies"]:
-                if clean(args.query) in clean(movie["title"]):
+                if has_matching_token(args.query, movie["title"]):
                     matchingMovies.append(movie)
             for index, movie in enumerate(sorted(matchingMovies, key=lambda m: m["id"])[:5]):
                 print(f'{index + 1}. {movie["title"]}')
 
         case _:
             parser.print_help()
-
 
 if __name__ == "__main__":
     main()
